@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+namespace _03.regexMon
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            
+            Regex bojomon = new Regex("[a-zA-Z]+-[a-zA-Z]+");
+            Regex didimon =new Regex("[^a-zA-Z\\-]+");
+
+            var input = Console.ReadLine();
+            
+            int count = 0;
+            while (input.Length >= 0)
+            {
+                if (count % 2 == 0)
+                {
+                    Match match = didimon.Match(input);
+                    if (match.Success)
+                    {
+                        string valueStart = match.Value.ToString();
+                        Console.WriteLine(match.Value.ToString());
+                        int remove = input.IndexOf(valueStart);
+                        input = input.Remove(0, valueStart.Length + remove);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    Match match = bojomon.Match(input);
+                    if (match.Success)
+                    {
+                        string valueStart = match.Value.ToString();
+                        Console.WriteLine(match.Value.ToString());
+                        int remove = input.IndexOf(valueStart);
+                        input = input.Remove(0, valueStart.Length + remove);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                count++;
+
+            }
+        }
+    }
+}
