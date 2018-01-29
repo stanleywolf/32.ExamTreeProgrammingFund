@@ -1,0 +1,61 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace _04.enduranceRally
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var drivers = Console.ReadLine().Split(' ').ToArray();
+            var zones = Console.ReadLine().Split(' ')
+                .Select(double.Parse).ToArray();
+            var checkPointIndex = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
+           
+            var have = false;
+            for (int i = 0; i < drivers.Length; i++)
+            {
+               var fuel=0.0;
+                fuel = drivers[i].ToCharArray().First();
+                if (fuel <= 0)
+                {
+                    break;
+                }
+                for (int j = 0; j < zones.Length; j++)
+                {
+                    
+                    have = false;
+                    for (int k = 0; k < checkPointIndex.Length; k++)
+                    {
+                        if (j==checkPointIndex[k])
+                        {
+                            have = true;
+                        }
+                    }
+                    if (have == true)
+                    {
+                        fuel += zones[j];
+                    }
+                    else if (have==false)
+                    {
+                        fuel -= zones[j];
+                    }
+                    if (fuel <= 0)
+                    {
+                        Console.WriteLine($"{drivers[i]} - reached {j}");
+                        break;
+                    }
+                }
+                if (fuel <= 0)
+                {
+                    continue;
+                }
+                Console.WriteLine($"{drivers[i]} - fuel left {fuel:f2}");
+                
+            }
+        }
+    }
+}
